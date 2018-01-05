@@ -1,0 +1,22 @@
+/*
+  Chemical Formulae Lab
+  Mayank Vanjani
+  CS2114
+  NYU Tandon School of Engineering
+
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct Formula {
+  string name;
+  int age = 17;
+};
+
+int main() {
+
+}

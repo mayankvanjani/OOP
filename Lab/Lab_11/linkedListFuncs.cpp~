@@ -1,0 +1,9 @@
+struct Node {
+    Node(int data=0, Node* next=nullptr) : data(data), next(next) {}
+    int data;
+    Node* next;
+};
+
+void listInsertHead(Node*& headPtr, int data) {
+    headPtr = new Node(data, headPtr);
+}

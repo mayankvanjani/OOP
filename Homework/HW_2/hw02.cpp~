@@ -1,0 +1,164 @@
+/*
+  Homework #2: A Game of Medieval Times
+  Mayank Vanjani mv1506
+  CS 2114
+  Professor Sterling
+  NYU Tandon School of Engineering
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+using namespace std;
+
+struct warrior {
+  string name;
+  int strength;
+};
+
+void addWarrior( vector<warrior>& Warriors,
+		 const string& name, int strength ) {
+
+  bool check = true;
+  for ( const warrior& item : Warriors ) {
+    if (item.name == name) {
+      cout << "Already have a warrior with name: " << name << endl;
+      check = false;
+    }
+  }
+  
+  if (check) {
+    warrior toAdd;
+    toAdd.name = name;
+    toAdd.strength = strength;
+    Warriors.push_back(toAdd);
+  }
+  
+}
+
+void addStatus(const vector<warrior>& Warriors) {
+  cout << "There are: "
+       << Warriors.size() << " warriors" << endl;
+  
+  for (const warrior& item : Warriors) {
+    cout << "Warrior: " << item.name
+	 << ", strength: " << item.strength << endl;
+  }
+}
+
+void addBattle( vector<warrior>& Warriors,
+		const string& firstName,
+		const string& secondName ) {
+
+  size_t first;
+  size_t second;
+  int check = 0;
+
+  for (size_t index = 0; index < Warriors.size(); ++index) {
+
+    if (Warriors[index].name == firstName) {
+      first = index;
+      ++check;
+    }
+    else if (Warriors[index].name == secondName) {
+      second = index;
+      ++check;
+    }
+  }
+
+  
+  if ( check != 2 ) {
+    cout << "The Desired Warriors Have Not Been Entered" << endl;
+  }
+  
+  else {
+    cout << Warriors[first].name << " battles " << Warriors[second].name << endl;
+
+    if (Warriors[first].strength == Warriors[second].strength) {
+      if (Warriors[first].strength == 0) {
+	cout << "Oh, NO! They're both dead! Yuck!" << endl;
+      }
+      
+      else {
+	Warriors[first].strength = 0;
+	Warriors[second].strength = 0;
+	cout << "Mutual Annihilation: "
+	     << Warriors[first].name << " and " << Warriors[second].name
+	     << " die at each other's hands" << endl;
+      }
+    }
+
+    if (Warriors[first].strength > Warriors[second].strength) {
+      if (Warriors[second].strength == 0) {
+	cout << "He's Dead, " << Warriors[first].name << endl;
+      }
+
+      else {
+	Warriors[first].strength -= Warriors[second].strength;
+	Warriors[second].strength = 0;
+	cout << Warriors[first].name << " defeats " << Warriors[second].name << endl;
+      }
+    }
+
+    if (Warriors[first].strength < Warriors[second].strength) {
+      if (Warriors[first].strength == 0) {
+	cout << "He's Dead, " << Warriors[second].name << endl;
+      }
+
+      else {
+	Warriors[second].strength -= Warriors[first].strength;
+	Warriors[first].strength = 0;
+	cout << Warriors[second].name << " defeats " << Warriors[first].name << endl;
+      }
+    }
+   
+  }
+  
+}
+
+
+int main() {
+
+  vector<warrior> Warriors;
+  
+  ifstream someFileStream("warriors.txt");
+  if (!someFileStream) {
+    cerr << "failed to open\n";
+    exit(1);
+  }
+
+  string action;
+  someFileStream >> action;
+  int status = 0;
+  while ( (action == "Warrior" || action == "Status" || action == "Battle") && (status < 2) ) {
+    
+    if (action == "Warrior") {
+      string name;
+      int strength;
+      someFileStream >> name >> strength;
+      addWarrior(Warriors, name, strength);
+    }
+
+    else if (action == "Status") {
+      ++status;
+      addStatus(Warriors);
+    }
+
+    else if (action == "Battle") {
+      string firstName;
+      string secondName;
+      someFileStream >> firstName >> secondName;
+      addBattle(Warriors, firstName, secondName);
+    }
+
+    else if (someFileStream.eof()) {
+      return 0;
+    }
+    
+    someFileStream >> action;
+  }
+
+  
+}

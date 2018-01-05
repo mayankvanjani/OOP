@@ -1,0 +1,7 @@
+int main() {
+  string s = "bat";
+  cout << s << endl;
+  cout << s[0] << endl;
+  s[0] = 'c';
+  cout << s[0] << endl;
+}

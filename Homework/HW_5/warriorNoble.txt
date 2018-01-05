@@ -1,0 +1,17 @@
+Noble King_Arthur
+Noble Lancelot_du_Lac
+Warrior Tarzan 10
+Status
+Hire King_Arthur Tarzan
+Status
+Hire Lancelot_du_Lac Tarzan
+Hire Jim Tarzan
+Hire King_Arthur randomGuy
+Hire Jim randomGuy
+Status
+Warrior Tarzan 100000
+Status
+Fire King_Arthur Tarzan
+Status
+Clear
+Status
